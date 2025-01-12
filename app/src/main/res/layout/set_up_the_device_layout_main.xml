@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_background">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:visibility="invisible"
+
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:indeterminate="false"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/returnToMainScreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Return to\nMain Screen"
+        android:onClick="returnToConfigScreen"
+        android:background="@drawable/bg_button_yellow"
+
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        />
+
+    <Button
+        android:id="@+id/testrun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" - Controltransfer - \n - Testrun - "
+        android:background="@drawable/bg_button_green"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        />
+
+    <Button
+        android:id="@+id/findTheCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Find the Camera"
+        android:onClick="searchTheCamera"
+        android:background="@drawable/bg_button"
+
+        app:layout_constraintTop_toTopOf="@id/guidelinehor1"
+        app:layout_constraintBottom_toBottomOf="@id/guidelinehor1"
+        app:layout_constraintLeft_toLeftOf="@id/guideline"
+        app:layout_constraintRight_toRightOf="@id/guideline"
+        />
+
+    <Button
+        android:id="@+id/listTheCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="List up the\nCamera"
+        android:onClick="listDeviceButtonClickEvent"
+        tools:layout_editor_absoluteX="43dp"
+        tools:layout_editor_absoluteY="259dp"
+        android:background="@drawable/bg_button"
+
+        app:layout_constraintTop_toTopOf="@id/guidelinehor1"
+        app:layout_constraintBottom_toBottomOf="@id/guidelinehor1"
+        app:layout_constraintLeft_toLeftOf="@id/guideline2"
+        app:layout_constraintRight_toRightOf="@id/guideline2"
+        />
+
+    <Button
+        android:id="@+id/setUpWithUVC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set up with\nUVC Settings"
+        android:onClick="setUpWithUvcSettings"
+        android:background="@drawable/bg_button"
+
+        app:layout_constraintTop_toTopOf="@id/guidelinehor2"
+        app:layout_constraintBottom_toBottomOf="@id/guidelinehor2"
+        app:layout_constraintLeft_toLeftOf="@id/guideline"
+        app:layout_constraintRight_toRightOf="@id/guideline"
+        />
+
+    <Button
+        android:id="@+id/editSaveTheValues"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit / Save\nthe Camera Values"
+        android:onClick="editCameraSettings"
+        android:background="@drawable/bg_button"
+
+        app:layout_constraintTop_toTopOf="@id/guidelinehor2"
+        app:layout_constraintBottom_toBottomOf="@id/guidelinehor2"
+        app:layout_constraintLeft_toLeftOf="@id/guideline2"
+        app:layout_constraintRight_toRightOf="@id/guideline2"
+        />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelinehor1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelinehor2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelinehor3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelinehor4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="1" />
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/fadingTextViewLayout"
+        style="@style/SwitchContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/setUpWithUVC"
+
+        >
+
+        <TextView
+            android:id="@+id/descripton"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="@string/descriptor_read_frames_5_sec"
+            android:textColor="#000080"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:gravity="center"
+            />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
+    <ScrollView
+        android:id="@+id/scrolli_setup"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_below="@id/guidelinehor3"
+
+        app:layout_constraintTop_toBottomOf="@id/setUpWithUVC"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp"
+
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarFadeDuration="50000"
+        android:scrollbarSize="4dp"
+        android:scrollbarThumbVertical="@color/colorSecondaryText"
+        >
+
+
+
+        <noman.zoomtextview.ZoomTextView
+            android:id="@+id/textDarstellung"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="fill_vertical"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="3dp"
+            />
+
+
+
+
+
+
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/raiseSize_setUp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/round_button"
+        android:text="+"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@id/lowerSize_setUp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:onClick="raiseSize"
+        />
+
+
+    <Button
+        android:id="@+id/lowerSize_setUp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/round_button"
+        android:text="-"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:onClick="lowerSize"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

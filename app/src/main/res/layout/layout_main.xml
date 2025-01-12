@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_background">
+
+
+    <ImageButton
+        android:id="@+id/language"
+        android:layout_width="@dimen/btn_language_size"
+        android:layout_height="@dimen/btn_language_size"
+        android:background="@color/transparent"
+        android:contentDescription="@string/america"
+        android:onClick="changeTheLanguage"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/country_america"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+        android:id="@+id/restoreValues"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Load Values"
+        android:onClick="restoreCameraSettings"
+        android:background="@drawable/bg_button"
+
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+
+        />
+
+
+
+
+    <Button
+        android:id="@+id/setUpTheCameraButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Up The\nCamera Device"
+        android:onClick="setUpTheUsbDevice"
+        android:background="@drawable/bg_button"
+
+        app:layout_constraintTop_toTopOf="@id/guidelinehor1"
+        app:layout_constraintBottom_toBottomOf="@id/guidelinehor1"
+        app:layout_constraintLeft_toLeftOf="@id/guideline"
+        app:layout_constraintRight_toRightOf="@id/guideline"
+        />
+
+
+
+    <Button
+        android:id="@+id/startTheStream"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start the\nCamera Stream"
+        android:onClick="isoStream"
+        android:background="@drawable/bg_button"
+
+        app:layout_constraintTop_toTopOf="@id/guidelinehor1"
+        app:layout_constraintBottom_toBottomOf="@id/guidelinehor1"
+        app:layout_constraintLeft_toLeftOf="@id/guideline2"
+        app:layout_constraintRight_toRightOf="@id/guideline2"
+
+        />
+
+    <Button
+        android:id="@+id/readMeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View the Read_Me"
+        android:onClick="viewReadme"
+        android:background="@drawable/bg_button_yellow"
+
+        app:layout_constraintTop_toTopOf="@id/guidelinehor2"
+        app:layout_constraintBottom_toBottomOf="@id/guidelinehor2"
+        app:layout_constraintLeft_toLeftOf="@id/guideline"
+        app:layout_constraintRight_toRightOf="@id/guideline"
+
+        />
+
+    <Button
+        android:id="@+id/viewPrivatePolicyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Privacy Policy"
+        android:onClick="viewPrivatePolicy"
+        android:background="@drawable/bg_button_yellow"
+
+        app:layout_constraintTop_toTopOf="@id/guidelinehor2"
+        app:layout_constraintBottom_toBottomOf="@id/guidelinehor2"
+        app:layout_constraintLeft_toLeftOf="@id/guideline2"
+        app:layout_constraintRight_toRightOf="@id/guideline2"
+
+        />
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelinehor1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelinehor2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelinehor3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelinehor4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+
+
+    <ScrollView
+        android:id="@+id/scrolli"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_below="@id/guidelinehor3"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+
+
+        app:layout_constraintTop_toBottomOf="@id/readMeButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp"
+
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarFadeDuration="50000"
+        android:scrollbarSize="4dp"
+        android:scrollbarThumbVertical="@color/colorSecondaryText"
+        >
+
+        <noman.zoomtextview.ZoomTextView
+            android:id="@+id/textDarstellung"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="3dp"
+            android:gravity="fill_vertical"
+            android:textColor="@android:color/black"
+            />
+    </ScrollView>
+
+
+    <include
+        android:id="@+id/languageChooser"
+        layout="@layout/layout_language_chooser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/readMeButton"
+      />
+
+
+        <Button
+            android:id="@+id/raiseSize"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/round_button"
+            android:text="+"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toTopOf="@id/lowerSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="raiseSize"
+            />
+
+
+        <Button
+            android:id="@+id/lowerSize"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/round_button"
+            android:text="-"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:onClick="lowerSize"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/libusbToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ToggleButton"
+        tools:layout_editor_absoluteX="158dp"
+        app:layout_constraintLeft_toLeftOf="@id/guideline50"
+        app:layout_constraintRight_toRightOf="@id/guideline50"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/bg_button_toggle_libusb"
+        android:textOff=""
+        android:textOn=""
+        android:checked="true"
+        />
+
+    <!--
+
+   <Button
+       android:id="@+id/New"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="68dp"
+       android:layout_marginLeft="68dp"
+       android:layout_marginTop="40dp"
+       android:onClick="newFile"
+       android:text="New"
+       app:layout_constraintBottom_toTopOf="@+id/setUpTheCameraButton"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent" />
+
+   <Button
+       android:id="@+id/Open"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:onClick="openFile"
+       android:text="Open"
+       app:layout_constraintEnd_toStartOf="@+id/Save"
+       app:layout_constraintStart_toEndOf="@+id/New"
+       app:layout_constraintTop_toTopOf="@+id/New" />
+
+   <Button
+       android:id="@+id/Save"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:onClick="saveFile"
+       android:text="Save"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.706"
+       app:layout_constraintStart_toEndOf="@+id/New"
+       app:layout_constraintTop_toTopOf="@+id/New" />
+
+   <EditText
+       android:id="@+id/fileText"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:ems="10"
+       android:inputType="textPersonName"
+       app:layout_constraintBottom_toTopOf="@+id/viewPrivatePolicyButton"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/startTheStream" />
+    -->
+
+</android.support.constraint.ConstraintLayout>

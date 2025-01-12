@@ -1,0 +1,189 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+apply plugin: 'com.android.application'
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('release-keystore.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+android {
+    ndkVersion '23.1.7779620'
+    compileSdk 35
+    defaultConfig {
+        applicationId "humer.uvc_camera"
+        targetSdkVersion 35
+        minSdkVersion 16
+        versionCode 127
+        versionName "2.2.7"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildFeatures {
+        buildConfig = true
+    }
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+    buildTypes {
+        customDebugType {
+            debuggable false
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources false
+
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //ndk.debugSymbolLevel = 'FULL'
+
+            debuggable false
+            jniDebuggable false
+        }
+        debug {
+            debuggable true
+            jniDebuggable true
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+    // TODO silences:
+    lintOptions {
+        abortOnError false
+    }
+
+    applicationVariants.all { variant ->
+        if (variant.getBuildType().isMinifyEnabled()) {
+            variant.getAssembleProvider().get().doLast  {
+                copy {
+                    from variant.mappingFile
+                    into "${rootDir}/proguardTools"
+                    rename { String fileName ->
+                        "mapping-${variant.name}.txt"
+                    }
+                }
+            }
+        }
+    }
+
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.2'
+    }
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.2'
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/libUvc_Support/CMakeLists.txt"
+        }
+    }
+
+    packagingOptions {
+        pickFirst 'lib/x86_64/libUvc_Support.so'
+        pickFirst 'lib/armeabi/libUvc_Support.so'
+        pickFirst 'lib/x86/libUvc_Support.so'
+        pickFirst 'lib/armeabi-v7a/libUvc_Support.so'
+        pickFirst 'lib/arm64-v8a/libUvc_Support.so'
+
+        pickFirst 'lib/x86_64/libusb1.0.so'
+        pickFirst 'lib/armeabi/libusb1.0.so'
+        pickFirst 'lib/x86/libusb1.0.so'
+        pickFirst 'lib/armeabi-v7a/libusb1.0.so'
+        pickFirst 'lib/arm64-v8a/libusb1.0.so'
+
+        pickFirst 'lib/x86_64/libjpeg-turbo.so'
+        pickFirst 'lib/armeabi/libjpeg-turbo.so'
+        pickFirst 'lib/x86/libjpeg-turbo.so'
+        pickFirst 'lib/armeabi-v7a/libjpeg-turbo.so'
+        pickFirst 'lib/arm64-v8a/libjpeg-turbo.so'
+
+        pickFirst 'lib/x86_64/libjpeg.so'
+        pickFirst 'lib/armeabi/libjpeg.so'
+        pickFirst 'lib/x86/libjpeg.so'
+        pickFirst 'lib/armeabi-v7a/libjpeg.so'
+        pickFirst 'lib/arm64-v8a/libjpeg.so'
+
+        pickFirst 'lib/x86_64/libyuv.so'
+        pickFirst 'lib/armeabi/libyuv.so'
+        pickFirst 'lib/x86/libyuv.so'
+        pickFirst 'lib/armeabi-v7a/libyuv.so'
+        pickFirst 'lib/arm64-v8a/libyuv.so'
+
+        pickFirst 'lib/x86_64/libuvc.so'
+        pickFirst 'lib/armeabi/libuvc.so'
+        pickFirst 'lib/x86/libuvc.so'
+        pickFirst 'lib/armeabi-v7a/libuvc.so'
+        pickFirst 'lib/arm64-v8a/libuvc.so'
+
+        pickFirst 'lib/x86/libunrooted_android.so'
+        pickFirst 'lib/armeabi/libunrooted_android.so'
+        pickFirst 'lib/x86_64/libunrooted_android.so'
+        pickFirst 'lib/armeabi-v7a/libunrooted_android.so'
+        pickFirst 'lib/arm64-v8a/libunrooted_android.so'
+    }
+    namespace 'humer.UvcCamera'
+
+
+}
+
+
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'net.java.dev.jna:jna:5.10.0@aar'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+
+    //FabSpeedDial Button
+    implementation 'io.github.yavski:fab-speed-dial:1.0.7'
+
+    //AlertDialog
+    //implementation 'com.crowdfire.cfalertdialog:cfalertdialog:1.1.0'
+
+    //JNA
+    implementation 'net.java.dev.jna:jna:5.14.0@aar'
+
+    // @ RequiresApi
+    implementation 'com.android.support:support-annotations:28.0.0'
+
+    // TextInputLayout
+    //implementation 'com.rafakob:floatingedittext:1.0.5'
+
+    //fading TextView
+    //implementation 'com.tomer:fadingtextview:2.6'
+
+    // Drop Down Menu
+    implementation 'com.github.zzz40500:AndroidSweetSheet:1.1.0'
+    // For Video Capture
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    // For OutputStream Copy
+    //implementation 'org.apache.directory.studio:org.apache.commons.io:2.4'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+}
+
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == "com.android.support") {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion "26.+"
+            }
+        }
+    }
+}
+

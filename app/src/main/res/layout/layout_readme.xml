@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    tools:context=".Main">
+
+
+        <ScrollView
+            android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_margin="2dp"
+                >
+
+
+                <TextView
+                    android:id="@+id/textDarstellung_0"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="0dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="10sp"
+                    android:text="@string/readme_0"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+
+                <TextView
+                    android:id="@+id/textDarstellung"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="0dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="10sp"
+                    android:text="@string/readme_1"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/findcam"
+                    android:scaleType="center"
+
+                    ></ImageView>
+
+                <TextView
+                    android:id="@+id/textDarstellung_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="0dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="10sp"
+                    android:text="@string/readme_2"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/listdev"
+                    android:scaleType="center"
+
+                    ></ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="0dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="10sp"
+                    android:text="@string/readme_3"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/setup_complete"
+                android:scaleType="center"
+
+                ></ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="0dp"
+                android:gravity="center"
+                android:lineSpacingExtra="10sp"
+                android:text="@string/readme_4"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textSize="18sp"
+                android:textStyle="italic" />
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/controltransfer"
+                    android:scaleType="center"
+
+                    ></ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="0dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="10sp"
+                    android:text="@string/readme_5"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/one_frame"
+                    android:scaleType="center"
+
+                    ></ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="0dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="10sp"
+                    android:text="@string/readme_6"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/one_frame_2"
+                    android:scaleType="center"
+
+                    ></ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="0dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="10sp"
+                    android:text="@string/readme_7"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+
+            </LinearLayout>
+
+
+
+    </ScrollView>
+
+
+</RelativeLayout>

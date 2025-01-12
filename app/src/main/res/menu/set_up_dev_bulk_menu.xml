@@ -1,0 +1,24 @@
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/videoProbeCommit"
+        android:title="Video Probe-Commit Controls" />
+
+
+    <item
+        android:id="@+id/testrun"
+        android:title="Bulk Test" >
+        <menu>
+            <item
+                android:id="@+id/bulk_read_1_frame"
+                android:title="Bulk read 1 Frame" />
+            <item
+                android:id="@+id/bulk_read_5_sec"
+                android:title="Bulk read 5 sec" />
+        </menu>
+    </item>
+
+
+
+</menu>
