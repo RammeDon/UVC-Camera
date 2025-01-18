@@ -58,10 +58,9 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.crowdfire.cfalertdialog.CFAlertDialog;
-import com.crowdfire.cfalertdialog.views.CFPushButton;
+
 import com.sun.jna.Pointer;
-import com.tomer.fadingtextview.FadingTextView;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
@@ -238,8 +237,7 @@ public class SetUpTheUsbDeviceUsbIso extends Activity {
     private CountDownLatch latch;
     private boolean automaticStart ;
     private boolean highQualityStreamSucessful;
-    private CFAlertDialog percentageBuilder;
-    private CFAlertDialog percentageBuilder2;
+
     private int number = 0;
     private boolean thorthCTLfailed;
     private boolean l1ibusbAutoRunning;
@@ -1157,70 +1155,9 @@ public class SetUpTheUsbDeviceUsbIso extends Activity {
             byte[] a = camDeviceConnection.getRawDescriptors();
             ByteBuffer uvcData = ByteBuffer.wrap(a);
             uvc_descriptor = new UVC_Descriptor(uvcData);
-            CFAlertDialog alertDialog;
-            CFAlertDialog.Builder builder = new CFAlertDialog.Builder(this);
-            LayoutInflater li = LayoutInflater.from(this);
-            View setup_auto_manual_view = li.inflate(R.layout.set_up_the_device_manual_automatic, null);
-            builder.setHeaderView(setup_auto_manual_view);
-            builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-            alertDialog = builder.show();
-            CFPushButton automatic = setup_auto_manual_view.findViewById(R.id.automatic) ;
-            automatic.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (!bulkMode) {
-                        displayMessage("Please select the manual Method");
-                        return;
-                    }
-                    log("Automatic Button Pressed");
-                    automaticStart = true;
-                    if (convertedMaxPacketSize == null) listDevice(camDevice);
-                    ProgressBar progressBar = findViewById(R.id.progressBar);
-                    progressBar.setVisibility(View.VISIBLE);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            tv = (ZoomTextView) findViewById(R.id.textDarstellung);
-                            tv.setText("");
-                            tv.setTextColor(Color.BLACK);
-                        }
-                    });
-                    alertDialog.dismiss();
-                }
-            });
-            CFPushButton manual = setup_auto_manual_view.findViewById(R.id.manual) ;
-            manual.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    log("Manual Button Pressed");
-                    // Set up from UVC manually
-                    if (uvc_descriptor.phraseUvcData() == 0) {
-                        if (convertedMaxPacketSize == null) listDevice(camDevice);
-                        if (uvc_descriptor.bcdUSB[0] == 3) {
 
-                        }
-                        log("running stf.setUvcSettingsMethod");
-                        stf.setUpWithUvcValues(uvc_descriptor, convertedMaxPacketSize, false);
-                    }
-                    alertDialog.dismiss();
-                }
-            });
-            alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    progress = "1% done";
-                    if (automaticStart) {
-                        // Automatic UVC Detection
-                        packetsPerRequest = 1;
-                        activeUrbs = 1;
-                        closeCameraDevice();
-                        doneTransfers = 0;
 
-                        startJnaAutoDetection();
 
-                    }
-                }
-            });
         }
     }
 

@@ -47,10 +47,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.crowdfire.cfalertdialog.CFAlertDialog;
-import com.crowdfire.cfalertdialog.views.CFPushButton;
+
 import com.sun.jna.Pointer;
-import com.tomer.fadingtextview.FadingTextView;
+
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -221,9 +220,6 @@ public class SaveToFile  {
                 fadingTextView.setVisibility(View.GONE);
                 fadingTextView.setVisibility(View.INVISIBLE);
 
-                FadingTextView FTV = (FadingTextView) activity.findViewById(R.id.fadingTextView);
-                FTV.setVisibility(View.INVISIBLE);
-                FTV.setVisibility(View.GONE);
                 Button testrun  = activity.findViewById(R.id.testrun);
                 testrun.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -425,10 +421,6 @@ public class SaveToFile  {
 
 
 
-                CFAlertDialog.Builder builder = new CFAlertDialog.Builder(mContext);
-                builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-                builder.setTitle("Delete Savefile:");
-                builder.setMessage("Select the file your want to delete:");
 
 
                 int selectedItem = 0;
@@ -1236,35 +1228,12 @@ public class SaveToFile  {
             int[] maxPacketsSizeArray;
             if (setUpTheUsbDeviceUsbIso != null) maxPacketsSizeArray = setUpTheUsbDeviceUsbIso.convertedMaxPacketSize.clone();
             else maxPacketsSizeArray = setUpTheUsbDeviceUvc.convertedMaxPacketSize.clone();
-            CFAlertDialog.Builder builder = new CFAlertDialog.Builder(mContext);
-            builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-            builder.setTitle("Select the maximal Packet Size:");
-            builder.setMessage("Your current MaxPacketSize: " + smaxPacketSize);
             int selectedItem = 0;
             for (int a =0; a<maxPacketsSizeArray.length; a++) {
                 if (maxPacketsSizeArray[a] == smaxPacketSize) selectedItem = a;
             }
             int coise;
-            builder.setSingleChoiceItems(maxPacketSizeStr, selectedItem, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int index) {
-                    smaxPacketSize = Integer.parseInt(maxPacketSizeStr[index]);
-                    sALT_SETTING = index +1;
-                    System.out.println("sALT_SETTING = " + sALT_SETTING);
-                    System.out.println("smaxPacketSize = " + smaxPacketSize);
-                }
-            });
 
-            builder.addButton("DONE", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.END, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int index) {
-                    if(sALT_SETTING == 0) sALT_SETTING = index +1;
-                    if(smaxPacketSize == 0) smaxPacketSize = Integer.parseInt(maxPacketSizeStr[index]);
-                    selectPackets(automatic);
-                    dialogInterface.dismiss();
-                }
-            });
-            builder.show();
 
         } else {
             // Select highest Max Packet Size
@@ -1299,35 +1268,11 @@ public class SaveToFile  {
         int[] maxPacketsSizeArray;
         if (setUpTheUsbDeviceUsbIso != null) maxPacketsSizeArray = setUpTheUsbDeviceUsbIso.convertedMaxPacketSize.clone();
         else maxPacketsSizeArray = setUpTheUsbDeviceUvc.convertedMaxPacketSize.clone();
-        CFAlertDialog.Builder builder = new CFAlertDialog.Builder(mContext);
-        builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-        builder.setTitle("Select the maximal Packet Size:");
-        builder.setMessage("Your current MaxPacketSize: " + smaxPacketSize);
         int selectedItem = 0;
         for (int a =0; a<maxPacketsSizeArray.length; a++) {
             if (maxPacketsSizeArray[a] == smaxPacketSize) selectedItem = a;
         }
         int coise;
-        builder.setSingleChoiceItems(maxPacketSizeStr, selectedItem, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int index) {
-                smaxPacketSize = Integer.parseInt(maxPacketSizeStr[index]);
-                sALT_SETTING = index +1;
-                System.out.println("sALT_SETTING = " + sALT_SETTING);
-                System.out.println("smaxPacketSize = " + smaxPacketSize);
-            }
-        });
-
-        builder.addButton("DONE", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.END, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int index) {
-                if(sALT_SETTING == 0) sALT_SETTING = index +1;
-                if(smaxPacketSize == 0) smaxPacketSize = Integer.parseInt(maxPacketSizeStr[index]);
-                selectPackets(uvc_device_info);
-                dialogInterface.dismiss();
-            }
-        });
-        builder.show();
 
     }
 
@@ -1337,89 +1282,8 @@ public class SaveToFile  {
         } else {
             if (!automatic) {
 
-                CFAlertDialog alertDialog;
-                CFAlertDialog.Builder builder = new CFAlertDialog.Builder(mContext);
-                LayoutInflater li = LayoutInflater.from(mContext);
-                View stf_select_max_package_layout_view = li.inflate(R.layout.stf_select_max_package_layout, null);
-                builder.setHeaderView(stf_select_max_package_layout_view);
-                builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-                builder.setTitle("Select your Packets per Request");
-                builder.setMessage("Your current Value = " + spacketsPerRequest);
-                final EditText input = new EditText(mContext);
-                input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
-                builder.setFooterView(input);
-                builder.addButton("Done", Color.parseColor("#FFFFFF"), Color.parseColor("#429ef4"), CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (input.getText().toString().isEmpty() == false) {
-                            spacketsPerRequest = Integer.parseInt(input.getText().toString());
-                            selectUrbs(automatic);
-                            dialog.dismiss();
-                        }
-                        else if (spacketsPerRequest != 0) {
-                            selectUrbs(automatic);
-                            dialog.dismiss();
-                        }
-                        else displayMessage("Select a Number, or type in a Value");
-                    }
-                });
-                alertDialog = builder.show();
-                TextView tv = stf_select_max_package_layout_view.findViewById(R.id.textView_setPackets);
-                tv.setText("One Packets has a size of " + smaxPacketSize + " bytes");
-                CFPushButton packetOne = stf_select_max_package_layout_view.findViewById(R.id.one) ;
-                packetOne.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        spacketsPerRequest = 1;
-                        alertDialog.dismiss();
-                        selectUrbs(false);
-                    }
-                });
-                CFPushButton packetTwo = stf_select_max_package_layout_view.findViewById(R.id.two) ;
-                packetTwo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        spacketsPerRequest = 2;
-                        alertDialog.dismiss();
-                        selectUrbs(false);
-                    }
-                });
-                CFPushButton packetThree = stf_select_max_package_layout_view.findViewById(R.id.three) ;
-                packetThree.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        spacketsPerRequest = 4;
-                        alertDialog.dismiss();
-                        selectUrbs(false);
-                    }
-                });
-                CFPushButton packetFour = stf_select_max_package_layout_view.findViewById(R.id.four) ;
-                packetFour.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        spacketsPerRequest = 8;
-                        alertDialog.dismiss();
-                        selectUrbs(false);
-                    }
-                });
-                CFPushButton packetFive = stf_select_max_package_layout_view.findViewById(R.id.five) ;
-                packetFive.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        spacketsPerRequest = 16;
-                        alertDialog.dismiss();
-                        selectUrbs(false);
-                    }
-                });
-                CFPushButton packetSix = stf_select_max_package_layout_view.findViewById(R.id.six) ;
-                packetSix.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        spacketsPerRequest = 32;
-                        alertDialog.dismiss();
-                        selectUrbs(false);
-                    }
-                });
+
+
             } else {
                 //if (raisePacketsPerRequest) spacketsPerRequest ++;
                 selectUrbs(true);
@@ -1431,181 +1295,16 @@ public class SaveToFile  {
         if (bulkMode) {
             selectUrbs(uvc_device_info);
         } else {
-            CFAlertDialog alertDialog;
-            CFAlertDialog.Builder builder = new CFAlertDialog.Builder(mContext);
-            LayoutInflater li = LayoutInflater.from(mContext);
-            View stf_select_max_package_layout_view = li.inflate(R.layout.stf_select_max_package_layout, null);
-            builder.setHeaderView(stf_select_max_package_layout_view);
-            builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-            builder.setTitle("Select your Packets per Request");
-            builder.setMessage("Your current Value = " + spacketsPerRequest);
-            final EditText input = new EditText(mContext);
-            input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
-            builder.setFooterView(input);
-            builder.addButton("Done", Color.parseColor("#FFFFFF"), Color.parseColor("#429ef4"), CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (input.getText().toString().isEmpty() == false) {
-                        spacketsPerRequest = Integer.parseInt(input.getText().toString());
-                        selectUrbs(uvc_device_info);
-                        dialog.dismiss();
-                    }
-                    else if (spacketsPerRequest != 0) {
-                        selectUrbs(uvc_device_info);
-                        dialog.dismiss();
-                    }
-                    else displayMessage("Select a Number, or type in a Value");
-                }
-            });
-            alertDialog = builder.show();
-            TextView tv = stf_select_max_package_layout_view.findViewById(R.id.textView_setPackets);
-            tv.setText("One Packets has a size of " + smaxPacketSize + " bytes");
-            CFPushButton packetOne = stf_select_max_package_layout_view.findViewById(R.id.one) ;
-            packetOne.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    spacketsPerRequest = 1;
-                    alertDialog.dismiss();
-                    selectUrbs(uvc_device_info);
-                }
-            });
-            CFPushButton packetTwo = stf_select_max_package_layout_view.findViewById(R.id.two) ;
-            packetTwo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    spacketsPerRequest = 2;
-                    alertDialog.dismiss();
-                    selectUrbs(uvc_device_info);
-                }
-            });
-            CFPushButton packetThree = stf_select_max_package_layout_view.findViewById(R.id.three) ;
-            packetThree.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    spacketsPerRequest = 4;
-                    alertDialog.dismiss();
-                    selectUrbs(uvc_device_info);
-                }
-            });
-            CFPushButton packetFour = stf_select_max_package_layout_view.findViewById(R.id.four) ;
-            packetFour.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    spacketsPerRequest = 8;
-                    alertDialog.dismiss();
-                    selectUrbs(uvc_device_info);
-                }
-            });
-            CFPushButton packetFive = stf_select_max_package_layout_view.findViewById(R.id.five) ;
-            packetFive.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    spacketsPerRequest = 16;
-                    alertDialog.dismiss();
-                    selectUrbs(uvc_device_info);
-                }
-            });
-            CFPushButton packetSix = stf_select_max_package_layout_view.findViewById(R.id.six) ;
-            packetSix.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    spacketsPerRequest = 32;
-                    alertDialog.dismiss();
-                    selectUrbs(uvc_device_info);
-                }
-            });
+
+
+
+
         }
     }
 
     public void selectUrbs(boolean automatic) {
         if (!automatic) {
-            CFAlertDialog alertDialog;
-            CFAlertDialog.Builder builder = new CFAlertDialog.Builder(mContext);
-            LayoutInflater li = LayoutInflater.from(mContext);
-            View stf_select_max_package_layout_view = li.inflate(R.layout.stf_select_active_urbs, null);
-            builder.setHeaderView(stf_select_max_package_layout_view);
 
-            builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-            builder.setTitle("Select your active Usb Request Blocks");
-            builder.setMessage("Your current Value = " + sactiveUrbs);
-            final EditText input = new EditText(mContext);
-            input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
-            builder.setFooterView(input);
-            builder.addButton("Done", Color.parseColor("#FFFFFF"), Color.parseColor("#429ef4"), CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (input.getText().toString().isEmpty() == false) {
-                        sactiveUrbs = Integer.parseInt(input.getText().toString());
-                        selectFormatIndex(automatic);
-                        dialog.dismiss();
-                    }
-                    else if (sactiveUrbs != 0) {
-                        selectFormatIndex(automatic);
-                        dialog.dismiss();
-                    }
-                    else displayMessage("Select a Number, or type in a Value");
-                }
-            });
-            alertDialog = builder.show();
-            TextView tv = stf_select_max_package_layout_view.findViewById(R.id.textView_setUrbs);
-            tv.setText("One Usb Request Block has a size of " + smaxPacketSize + " x " + spacketsPerRequest +" bytes");
-            CFPushButton packetOne = stf_select_max_package_layout_view.findViewById(R.id.uone) ;
-            packetOne.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    log("selectUrbs --> one clicked");
-                    sactiveUrbs = 1;
-                    alertDialog.dismiss();
-                    selectFormatIndex(automatic);
-                    log("selectUrbs --> one end");
-
-                }
-            });
-            CFPushButton packetTwo = stf_select_max_package_layout_view.findViewById(R.id.utwo) ;
-            packetTwo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    sactiveUrbs = 2;
-                    alertDialog.dismiss();
-                    selectFormatIndex(automatic);
-                }
-            });
-            CFPushButton packetThree = stf_select_max_package_layout_view.findViewById(R.id.uthree) ;
-            packetThree.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    sactiveUrbs = 4;
-                    alertDialog.dismiss();
-                    selectFormatIndex(automatic);
-                }
-            });
-            CFPushButton packetFour = stf_select_max_package_layout_view.findViewById(R.id.ufour) ;
-            packetFour.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    sactiveUrbs = 8;
-                    alertDialog.dismiss();
-                    selectFormatIndex(automatic);
-                }
-            });
-            CFPushButton packetFive = stf_select_max_package_layout_view.findViewById(R.id.ufive) ;
-            packetFive.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    sactiveUrbs = 16;
-                    alertDialog.dismiss();
-                    selectFormatIndex(automatic);
-                }
-            });
-            CFPushButton packetSix = stf_select_max_package_layout_view.findViewById(R.id.usix) ;
-            packetSix.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    sactiveUrbs = 32;
-                    alertDialog.dismiss();
-                    selectFormatIndex(automatic);
-                }
-            });
         } else {
             //if (raiseActiveUrbs) sactiveUrbs ++;
             selectFormatIndex(automatic);
@@ -1613,93 +1312,7 @@ public class SaveToFile  {
     }
 
     public void selectUrbs(final JNA_I_LibUsb.uvc_device_info.ByReference uvc_device_info) {
-            CFAlertDialog alertDialog;
-            CFAlertDialog.Builder builder = new CFAlertDialog.Builder(mContext);
-            LayoutInflater li = LayoutInflater.from(mContext);
-            View stf_select_max_package_layout_view = li.inflate(R.layout.stf_select_active_urbs, null);
-            builder.setHeaderView(stf_select_max_package_layout_view);
 
-            builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-            builder.setTitle("Select your active Usb Request Blocks");
-            builder.setMessage("Your current Value = " + sactiveUrbs);
-            final EditText input = new EditText(mContext);
-            input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
-            builder.setFooterView(input);
-            builder.addButton("Done", Color.parseColor("#FFFFFF"), Color.parseColor("#429ef4"), CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (input.getText().toString().isEmpty() == false) {
-                        sactiveUrbs = Integer.parseInt(input.getText().toString());
-                        selectFormatIndex(uvc_device_info);
-                        dialog.dismiss();
-                    }
-                    else if (sactiveUrbs != 0) {
-                        selectFormatIndex(uvc_device_info);
-                        dialog.dismiss();
-                    }
-                    else displayMessage("Select a Number, or type in a Value");
-                }
-            });
-            alertDialog = builder.show();
-            TextView tv = stf_select_max_package_layout_view.findViewById(R.id.textView_setUrbs);
-            tv.setText("One Usb Request Block has a size of " + smaxPacketSize + " x " + spacketsPerRequest +" bytes");
-            CFPushButton packetOne = stf_select_max_package_layout_view.findViewById(R.id.uone) ;
-            packetOne.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    log("selectUrbs --> one clicked");
-                    sactiveUrbs = 1;
-                    alertDialog.dismiss();
-                    selectFormatIndex(uvc_device_info);
-                    log("selectUrbs --> one end");
-
-                }
-            });
-            CFPushButton packetTwo = stf_select_max_package_layout_view.findViewById(R.id.utwo) ;
-            packetTwo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    sactiveUrbs = 2;
-                    alertDialog.dismiss();
-                    selectFormatIndex(uvc_device_info);
-                }
-            });
-            CFPushButton packetThree = stf_select_max_package_layout_view.findViewById(R.id.uthree) ;
-            packetThree.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    sactiveUrbs = 4;
-                    alertDialog.dismiss();
-                    selectFormatIndex(uvc_device_info);
-                }
-            });
-            CFPushButton packetFour = stf_select_max_package_layout_view.findViewById(R.id.ufour) ;
-            packetFour.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    sactiveUrbs = 8;
-                    alertDialog.dismiss();
-                    selectFormatIndex(uvc_device_info);
-                }
-            });
-            CFPushButton packetFive = stf_select_max_package_layout_view.findViewById(R.id.ufive) ;
-            packetFive.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    sactiveUrbs = 16;
-                    alertDialog.dismiss();
-                    selectFormatIndex(uvc_device_info);
-                }
-            });
-            CFPushButton packetSix = stf_select_max_package_layout_view.findViewById(R.id.usix) ;
-            packetSix.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    sactiveUrbs = 32;
-                    alertDialog.dismiss();
-                    selectFormatIndex(uvc_device_info);
-                }
-            });
     }
 
     public void selectFormatIndex (boolean automatic) {
@@ -1714,42 +1327,6 @@ public class SaveToFile  {
                 System.out.println("numberFormatIndexes[" + a + "] = " + numberFormatIndexes[a]);
                 textmsg[a] = formatIndex.videoformat.toString();
             }
-            final CFAlertDialog.Builder builder = new CFAlertDialog.Builder(mContext);
-            builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-            builder.setTitle("Select the Camera Format (MJPEG / YUV / ...)");
-            if (svideoformat != null) builder.setMessage("Your current format: " + svideoformat);
-            int selectedItem = 0;
-            for (int a =0; a<numberFormatIndexes.length; a++) {
-                if (numberFormatIndexes[a] == scamFormatIndex) selectedItem = a;
-            }
-            final int startvalue = selectedItem;
-            builder.setSingleChoiceItems(textmsg, startvalue, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int index) {
-                    scamFormatIndex = numberFormatIndexes[index];
-                    formatIndex = uvc_descriptor.getFormatIndex(index);
-                    svideoformat = formatIndex.videoformat.toString();
-                    log("svideoformat = " + svideoformat);
-                    log("index = " + index);
-                    selectFrameIndex(automatic);
-                    dialogInterface.dismiss();
-                }
-            });
-            builder.addButton("DONE", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.END, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int index) {
-                    log("index = " + index);
-                    scamFormatIndex = numberFormatIndexes[index];
-                    formatIndex = uvc_descriptor.getFormatIndex(index);
-                    svideoformat = formatIndex.videoformat.toString();
-                    log("formatIndex = " + formatIndex.videoformat.toString());
-                    log("svideoformat = " + svideoformat);
-                    log("index = " + index);
-                    selectFrameIndex(automatic);
-                    dialogInterface.dismiss();
-                }
-            });
-            builder.show();
         } else {
             numberFormatIndexes = new int[uvc_descriptor.formatIndex.size()];
             final String[] textmsg = new String[uvc_descriptor.formatIndex.size()];
@@ -1842,59 +1419,9 @@ public class SaveToFile  {
                 textmsg[a] = fourccFormat;
             }
         }
-        final CFAlertDialog.Builder builder = new CFAlertDialog.Builder(mContext);
-        builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-        builder.setTitle("Select the Camera Format (MJPEG / YUV / ...)");
-        if (svideoformat != null) builder.setMessage("Your current format: " + svideoformat);
-        int selectedItem = 0;
-        for (int a =0; a<numberFormatIndexes.length; a++) {
-            if (numberFormatIndexes[a] == scamFormatIndex) selectedItem = a;
-        }
-        final int startvalue = selectedItem;
-        builder.setSingleChoiceItems(textmsg, startvalue, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int index) {
-                scamFormatIndex = numberFormatIndexes[index];
 
-                if (format_descs_Array[index].bDescriptorSubtype == VS_format_mjpeg) svideoformat = "MJPEG";
-                else if (format_descs_Array[index].bDescriptorSubtype == VS_format_uncompressed) {
-                    String guidFormat = null;
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                        guidFormat = new String(format_descs_Array[index].formatSpecifier.guidFormat, StandardCharsets.UTF_8);
-                    } else guidFormat =  new String (format_descs_Array[index].formatSpecifier.guidFormat);
-                    String fourccFormat = guidFormat.substring(0,4);
-                    System.out.println("fourccFormat = " + fourccFormat);
-                    svideoformat = fourccFormat;
-                }
 
-                log("svideoformat = " + svideoformat);
-                log("index = " + index);
-                selectFrameIndex(uvc_device_info, format_descs_Array[index]);
-                dialogInterface.dismiss();
-            }
-        });
-        builder.addButton("DONE", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.END, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int index) {
-                log("index = " + index);
-                scamFormatIndex = numberFormatIndexes[index];
-                if (format_descs_Array[index].bDescriptorSubtype == VS_format_mjpeg) svideoformat = "MJPEG";
-                else if (format_descs_Array[index].bDescriptorSubtype == VS_format_uncompressed) {
-                    String guidFormat = null;
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                        guidFormat = new String(format_descs_Array[index].formatSpecifier.guidFormat, StandardCharsets.UTF_8);
-                    } else guidFormat =  new String (format_descs_Array[index].formatSpecifier.guidFormat);
-                    String fourccFormat = guidFormat.substring(0,4);
-                    System.out.println("fourccFormat = " + fourccFormat);
-                    svideoformat = fourccFormat;
-                }
-                log("svideoformat = " + svideoformat);
-                log("index = " + index);
-                selectFrameIndex(uvc_device_info, format_descs_Array[index]);
-                dialogInterface.dismiss();
-            }
-        });
-        builder.show();
+
     }
 
     public void selectFormatIndex_Libusb_Automatic (final JNA_I_LibUsb.uvc_device_info.ByReference uvc_device_info) {
@@ -1992,41 +1519,9 @@ public class SaveToFile  {
                 frameDescriptorsResolutionArray[j] = stringb.toString();
                 scamFrameIndexArray[j] = frameIndex.frameIndex;
             }
-            final CFAlertDialog.Builder builder = new CFAlertDialog.Builder(mContext);
-            builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-            builder.setTitle("Camera Resolution (Frame Format)");
-            builder.setMessage("Your current Resolution: " + simageWidth + "x" + simageHeight);
-            int selectedItem = 0;
-            for (int a =0; a<scamFrameIndexArray.length; a++) {
-                if (scamFrameIndexArray[a] == scamFrameIndex) selectedItem = a;
-            }
-            builder.setSingleChoiceItems(frameDescriptorsResolutionArray, selectedItem, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int index) {
-                    frameIndex = formatIndex.getFrameIndex(index);
-                    scamFrameIndex = frameIndex.frameIndex;
-                    System.out.println("scamFrameIndex = " + scamFrameIndex);
-                    simageWidth = frameIndex.wWidth;
-                    simageHeight = frameIndex.wHeight;
-                }
-            });
-            builder.addButton("DONE", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.END, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int index) {
-                    if (scamFrameIndex == 0) {
-                        frameIndex = formatIndex.getFrameIndex(index);
-                        scamFrameIndex = frameIndex.frameIndex;
-                    }
-                    if (simageWidth == 0 || simageHeight == 0) {
-                        frameIndex = formatIndex.getFrameIndex(index);
-                        simageWidth = frameIndex.wWidth;
-                        simageHeight = frameIndex.wHeight;
-                    }
-                    selectDWFrameIntervall(automatic);
-                    dialogInterface.dismiss();
-                }
-            });
-            builder.show();
+
+
+
         } else {
             if (libUsb_autoDetect != null || jna_autoDetect != null) {
                 if(!highQuality) {
@@ -2088,39 +1583,8 @@ public class SaveToFile  {
             frameDescriptorsResolutionArray[j] = stringb.toString();
             scamFrameIndexArray[j] = frame_descs_Array[j].bFrameIndex;
         }
-        final CFAlertDialog.Builder builder = new CFAlertDialog.Builder(mContext);
-        builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-        builder.setTitle("Camera Resolution (Frame Format)");
-        builder.setMessage("Your current Resolution: " + simageWidth + "x" + simageHeight);
-        int selectedItem = 0;
-        for (int a =0; a<scamFrameIndexArray.length; a++) {
-            if (scamFrameIndexArray[a] == scamFrameIndex) selectedItem = a;
-        }
-        builder.setSingleChoiceItems(frameDescriptorsResolutionArray, selectedItem, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int index) {
-                scamFrameIndex = frame_descs_Array[index].bFrameIndex;
-                System.out.println("scamFrameIndex = " + scamFrameIndex);
-                simageWidth = frame_descs_Array[index].wWidth;
-                simageHeight = frame_descs_Array[index].wHeight;
-            }
-        });
-        builder.addButton("DONE", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.END, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int index) {
-                if (scamFrameIndex == 0) {
-                    scamFrameIndex = frame_descs_Array[index].bFrameIndex;
-                }
-                if (simageWidth == 0 || simageHeight == 0) {
-                    scamFrameIndex = frame_descs_Array[index].bFrameIndex;
-                    simageWidth = frame_descs_Array[index].wWidth;
-                    simageHeight = frame_descs_Array[index].wHeight;
-                }
-                selectDWFrameIntervall(uvc_device_info, frame_descs_Array[index]);
-                dialogInterface.dismiss();
-            }
-        });
-        builder.show();
+
+
     }
 
     private void selectFrameIndex_Libusb_Automatic (final JNA_I_LibUsb.uvc_device_info.ByReference uvc_device_info, final JNA_I_LibUsb.uvc_format_desc format_descs) {
@@ -2172,11 +1636,6 @@ public class SaveToFile  {
             for (int k=0; k<dwFrameIntervalArray.length; k++) {
                 dwFrameIntervalArray[k] = Integer.toString(frameIndex.dwFrameInterval[k]);
             }
-            final CFAlertDialog.Builder builder = new CFAlertDialog.Builder(mContext);
-            builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-            builder.setTitle("Select the camera Frame Intervall");
-            if (scamFrameInterval == 0)  builder.setMessage("Your current FrameInterval:  " + scamFrameInterval + " fps");
-            else builder.setMessage("Your current FrameInterval: " + (10000000 /  scamFrameInterval) + " fps");
 
             int selectedItem = 0;
             for (int a =0; a<frameIndex.dwFrameInterval.length; a++) {
@@ -2187,22 +1646,6 @@ public class SaveToFile  {
                 builderArray[k] = "";
                 builderArray[k] += (  (10000000 / frameIndex.dwFrameInterval[k] )  + "  -  Frames per Second") ;
             }
-            builder.setSingleChoiceItems(builderArray, selectedItem, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int index) {
-                    scamFrameInterval = frameIndex.dwFrameInterval[index];
-                }
-            });
-            builder.addButton("DONE", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.END, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int index) {
-                    if (scamFrameInterval == 0) scamFrameInterval = frameIndex.dwFrameInterval[index];
-                    writeTheValues();
-                    saveYesNo();
-                    dialogInterface.dismiss();
-                }
-            });
-            builder.show();
         } else {
             if (libUsb_autoDetect != null || jna_autoDetect != null) {
                 int[] intervalArray = frameIndex.dwFrameInterval.clone();
@@ -2233,11 +1676,6 @@ public class SaveToFile  {
         for (int k=0,j=0; k<dwFrameIntervalArray.length; k++,j+=4) {
             dwFrameIntervalArray[k] = Integer.toString(frame_desc.intervals.getInt(j));
         }
-        final CFAlertDialog.Builder builder = new CFAlertDialog.Builder(mContext);
-        builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-        builder.setTitle("Select the camera Frame Intervall");
-        if (scamFrameInterval == 0)  builder.setMessage("Your current FrameInterval:  " + scamFrameInterval + " fps");
-        else builder.setMessage("Your current FrameInterval: " + (10000000 /  scamFrameInterval) + " fps");
         int selectedItem = 0;
         for (int a =0, j = 0; a<frame_desc.bFrameIntervalType; a++, j+=4) {
             if (frame_desc.intervals.getInt(j) == scamFrameInterval) selectedItem = a;
@@ -2247,24 +1685,7 @@ public class SaveToFile  {
             builderArray[k] = "";
             builderArray[k] += (  (10000000 / frame_desc.intervals.getInt(l) )  + "  -  Frames per Second") ;
         }
-        builder.setSingleChoiceItems(builderArray, selectedItem, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int index) {
 
-                scamFrameInterval = frame_desc.intervals.getInt(index*4);
-
-            }
-        });
-        builder.addButton("DONE", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.END, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int index) {
-                if (scamFrameInterval == 0) scamFrameInterval = frame_desc.intervals.getInt(index*4);
-                writeTheValues();
-                saveYesNo();
-                dialogInterface.dismiss();
-            }
-        });
-        builder.show();
     }
 
     private void selectDWFrameIntervall_Libusb_Automatic(final JNA_I_LibUsb.uvc_device_info.ByReference uvc_device_info, final JNA_I_LibUsb.uvc_frame_desc frame_desc){

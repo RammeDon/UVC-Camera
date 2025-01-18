@@ -61,12 +61,11 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.crowdfire.cfalertdialog.CFAlertDialog;
-import com.crowdfire.cfalertdialog.views.CFPushButton;
+
 import com.serenegiant.usb.IFrameCallback;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
-import com.tomer.fadingtextview.FadingTextView;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -238,8 +237,6 @@ public class SetUpTheUsbDeviceUvc extends Activity {
     private CountDownLatch latch;
     private boolean automaticStart;
     private boolean highQualityStreamSucessful;
-    private CFAlertDialog percentageBuilder;
-    private CFAlertDialog percentageBuilder2;
     private int number = 0;
     private boolean thorthCTLfailed;
     private boolean l1ibusbAutoRunning;
@@ -1386,123 +1383,12 @@ public class SetUpTheUsbDeviceUvc extends Activity {
             if(!isochronous) {
                 //displayMessage("Camera not supported");
                 log("No Isochronous Camera");
-                CFAlertDialog alertDialog;
-                CFAlertDialog.Builder builder = new CFAlertDialog.Builder(this);
-                LayoutInflater li = LayoutInflater.from(this);
-                View setup_auto_manual_view = li.inflate(R.layout.set_up_the_device_manual_automatic, null);
-                builder.setHeaderView(setup_auto_manual_view);
-                builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-                alertDialog = builder.show();
-                CFPushButton automatic = setup_auto_manual_view.findViewById(R.id.automatic);
-                automatic.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ProgressBar progressBar = findViewById(R.id.progressBar);
-                        progressBar.setVisibility(View.VISIBLE);
-                        automaticStart = true;
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                tv = (ZoomTextView) findViewById(R.id.textDarstellung);
-                                tv.setText("");
-                                tv.setTextColor(Color.BLACK);
-                            }
-                        });
-                          // Automatic Method disabled for now
-                        alertDialog.dismiss();
-                    }
-                });
-                CFPushButton manual = setup_auto_manual_view.findViewById(R.id.manual);
-                manual.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        log("Manual Button Pressed");
-                        automaticStart = false;
-                        // Set up from UVC manually
-                        if (convertedMaxPacketSize == null) listDevice(camDevice);
-                        log("running stf.setUvcSettingsMethod");
-                        final JNA_I_LibUsb.uvc_device_info.ByReference uvc_device_info = JNA_I_LibUsb.INSTANCE.listDeviceUvc(new Pointer(mNativePtr), camDeviceConnection.getFileDescriptor());
-                        stf.setUpWithUvcValues_libusb(uvc_device_info, convertedMaxPacketSize, false);
-                        alertDialog.dismiss();
-                    }
-                });
-                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        if (automaticStart) {
-                            progress = "1% done";
-                            // Automatic UVC Detection
-                            int result = automaticMethod(mNativePtr);
-                            Pointer nativeCam = new Pointer(mNativePtr);
-                            JNA_I_LibUsb.uvc_struct.ByReference camera = JNA_I_LibUsb.INSTANCE.get_uvc_camera_t(new Pointer(mNativePtr));
-                            log("camera.activeUrbs = " + camera.activeUrbs);
-                            ProgressBar progressBar = findViewById(R.id.progressBar);
-                            progressBar.setVisibility(View.INVISIBLE);
-                        }
-                    }
-                });
+
+
+
 
             } else {
-                CFAlertDialog alertDialog;
-                CFAlertDialog.Builder builder = new CFAlertDialog.Builder(this);
-                LayoutInflater li = LayoutInflater.from(this);
-                View setup_auto_manual_view = li.inflate(R.layout.set_up_the_device_manual_automatic, null);
-                builder.setHeaderView(setup_auto_manual_view);
-                builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-                alertDialog = builder.show();
-                CFPushButton automatic = setup_auto_manual_view.findViewById(R.id.automatic);
-                automatic.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ProgressBar progressBar = findViewById(R.id.progressBar);
-                        progressBar.setVisibility(View.VISIBLE);
-                        automaticStart = true;
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                tv = (ZoomTextView) findViewById(R.id.textDarstellung);
-                                tv.setText("");
-                                tv.setTextColor(Color.BLACK);
-                            }
-                        });
-                        alertDialog.dismiss();
-                    }
-                });
-                CFPushButton manual = setup_auto_manual_view.findViewById(R.id.manual);
-                manual.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        log("Manual Button Pressed");
-                        automaticStart = false;
-                        // Set up from UVC manually
-                        if (convertedMaxPacketSize == null) listDevice(camDevice);
-                        log("running stf.setUvcSettingsMethod");
-                        final JNA_I_LibUsb.uvc_device_info.ByReference uvc_device_info = JNA_I_LibUsb.INSTANCE.listDeviceUvc(new Pointer(mNativePtr), camDeviceConnection.getFileDescriptor());
-                        stf.setUpWithUvcValues_libusb(uvc_device_info, convertedMaxPacketSize, false);
-                        alertDialog.dismiss();
-                    }
-                });
-                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        if (automaticStart) {
-                            progress = "1% done";
-                            int result = automaticMethod(mNativePtr);
-                            JNA_I_LibUsb.uvc_struct.ByReference camera = JNA_I_LibUsb.INSTANCE.get_uvc_camera_t(new Pointer(mNativePtr));
-                            log("camera.activeUrbs = " + camera.activeUrbs);
-                            log("camera.packetsPerRequest = " + camera.packetsPerRequest);
-                            log("camera.maxPacketSize = " + camera.maxPacketSize);
-                            log("camera.imageWidth = " + camera.imageWidth);
-                            log("camera.imageHeight = " + camera.imageHeight);
-                            log("camera.camFrameInterval = " + camera.camFrameInterval);
 
-                            takeTheValues(camera);
-                            log("camera.frameFormat = " + camera.frameFormat);
-                            ProgressBar progressBar = findViewById(R.id.progressBar);
-                            progressBar.setVisibility(View.INVISIBLE);
-                        }
-                    }
-                });
 
             }
         }
@@ -1526,26 +1412,12 @@ public class SetUpTheUsbDeviceUvc extends Activity {
         byte[] a = camDeviceConnection.getRawDescriptors();
         ByteBuffer uvcData = ByteBuffer.wrap(a);
         uvc_descriptor = new UVC_Descriptor(uvcData);
-        CFAlertDialog alertDialog;
-        CFAlertDialog.Builder builder = new CFAlertDialog.Builder(this);
+
         LayoutInflater li = LayoutInflater.from(this);
         View setup_auto_manual_view = li.inflate(R.layout.set_up_the_device_move_to_native, null);
-        builder.setHeaderView(setup_auto_manual_view);
-        builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
+
         libUsb = true;
-        alertDialog = builder.show();
-        CFPushButton manual = setup_auto_manual_view.findViewById(R.id.native_Only_Manual);
-        manual.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Set up from UVC manually
-                if (uvc_descriptor.phraseUvcData() == 0) {
-                    if (convertedMaxPacketSize == null) listDevice(camDevice);
-                    stf.setUpWithUvcValues(uvc_descriptor, convertedMaxPacketSize, false);
-                }
-                alertDialog.dismiss();
-            }
-        });
+
     }
 
     private final String getUSBFSName(final UsbDevice ctrlBlock) {
@@ -1719,12 +1591,8 @@ public class SetUpTheUsbDeviceUvc extends Activity {
                             tv.setVisibility(View.GONE);
                             ConstraintLayout fadingTextView = (ConstraintLayout) findViewById(R.id.fadingTextViewLayout);
                             fadingTextView.setVisibility(View.VISIBLE);
-                            FadingTextView FTV = (FadingTextView) findViewById(R.id.fadingTextView);
-                            FTV.setTimeout(500, MILLISECONDS);
-                            FTV.setVisibility(View.VISIBLE);
+
                             String[] texts = {"seconds counting","...."};
-                            FTV.setTexts(texts);
-                            FTV.forceRefresh();
                         }
                     });
                     try {
@@ -1815,9 +1683,7 @@ public class SetUpTheUsbDeviceUvc extends Activity {
                         ConstraintLayout fadingTextView = (ConstraintLayout) findViewById(R.id.fadingTextViewLayout);
                         fadingTextView.setVisibility(View.GONE);
                         fadingTextView.setVisibility(View.INVISIBLE);
-                        FadingTextView FTV = (FadingTextView) findViewById(R.id.fadingTextView);
-                        FTV.setVisibility(View.GONE);
-                        FTV.setVisibility(View.INVISIBLE);
+
                     }
                 });
             }

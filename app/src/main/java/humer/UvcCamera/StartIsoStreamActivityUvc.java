@@ -87,7 +87,6 @@ import java.util.Date;
 import java.util.Formatter;
 import java.util.HashMap;
 
-import com.crowdfire.cfalertdialog.CFAlertDialog;
 import com.mingle.sweetpick.CustomDelegate;
 import com.mingle.sweetpick.SweetSheet;
 import com.sample.timelapse.MJPEGGenerator ;
@@ -1073,13 +1072,8 @@ public class StartIsoStreamActivityUvc extends Activity {
         popup.inflate(R.menu.iso_stream_resolution_frameinterval);
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
-                CFAlertDialog.Builder builder;
                 switch (item.getItemId()) {
                     case R.id.resolution:
-                        builder = new CFAlertDialog.Builder(StartIsoStreamActivityUvc.this);
-                        builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-                        builder.setTitle("Select your Resolution");
-                        builder.setMessage("Current Resolution: " + imageWidth + "x" + imageHeight);
                         int [] [] resolutions;
                         if (videoformat.equals("MJPEG")) resolutions = iuvc_descriptor.findDifferentResolutions(true);
                         else resolutions = iuvc_descriptor.findDifferentResolutions(false);
@@ -1087,19 +1081,6 @@ public class StartIsoStreamActivityUvc extends Activity {
                         String [] resString = new String [resolutions.length];
                         for (int a = 0; a < resolutions.length; a++) resString[a] = Arrays.toString(resolutions[a]);
                         for (int a = 0; a < resolutions.length; a++) log("Arrays.toString(resolutions[" + a + "]  =  " + Arrays.toString(resolutions[a]));
-                        builder.setItems(resString , new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int index) {
-                                log("resolutions[index][0] = " + resolutions[index][0]);
-                                log("resolutions[index][1] = " + resolutions[index][1]);
-                                imageWidth = resolutions[index][0];
-                                imageHeight = resolutions[index][1];
-                                camFrameIndex = index + 1;
-                                displayMessage("Resolution selected.\nPlease restart the camera stream!");
-                                dialogInterface.dismiss();
-                            }
-                        });
-                        builder.show();
                         showAdjustValuesUnitMenu(findViewById(R.id.settingsButton));
                         return true;
                     case R.id.frameinterval:
@@ -1109,22 +1090,8 @@ public class StartIsoStreamActivityUvc extends Activity {
                         int [] intervals;
                         if (videoformat.equals("MJPEG")) intervals = iuvc_descriptor.findDifferentFrameIntervals(true, new int [] {imageWidth, imageHeight});
                         else intervals = iuvc_descriptor.findDifferentFrameIntervals(false, new int [] {imageWidth, imageHeight});
-                        builder = new CFAlertDialog.Builder(StartIsoStreamActivityUvc.this);
-                        builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-                        builder.setTitle("Select your FrameInterval");
-                        builder.setMessage("Current Interval: " + (10000000 / camFrameInterval) + " Frames per Second");
                         String [] intervalString = new String [intervals.length];
                         for (int a = 0; a < intervalString.length; a++) intervalString[a] = Integer.toString((10000000 / intervals[a])) + "   FPS";
-                        builder.setItems(intervalString , new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int index) {
-                                log("intervals[index] = " + intervals[index]);
-                                camFrameInterval = intervals[index];
-                                displayMessage("FrameInterval selected.\nPlease restart the camera stream!");
-                                dialogInterface.dismiss();
-                            }
-                        });
-                        builder.show();
                         return true;
                 }
                 return false;

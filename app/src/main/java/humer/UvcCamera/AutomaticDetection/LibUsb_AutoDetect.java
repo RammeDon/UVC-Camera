@@ -25,7 +25,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.crowdfire.cfalertdialog.CFAlertDialog;
+
 import com.sun.jna.Pointer;
 
 import java.nio.ByteBuffer;
@@ -133,8 +133,6 @@ public class LibUsb_AutoDetect extends AppCompatActivity {
     private CountDownLatch latch;
     private boolean automaticStart ;
     private boolean highQualityStreamSucessful;
-    private CFAlertDialog percentageBuilder;
-    private CFAlertDialog percentageBuilder2;
     private int number = 0;
     private boolean thorthCTLfailed;
     private boolean l1ibusbAutoRunning;
